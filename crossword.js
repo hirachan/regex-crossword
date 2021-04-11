@@ -245,6 +245,9 @@ function reset() {
   user_data.rows = [];
   saveData();
   $('.cell_input').val('');
+  g = 0;
+  finish = true;
+
   checkRules();
 }
 

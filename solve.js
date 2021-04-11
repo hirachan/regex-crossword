@@ -195,8 +195,8 @@ function getBestData(user_datas) {
 
 
 var g = 0
+var finish
 function solveMain(user_datas) {
-    finish = false
     best = getBestData(user_datas)
 
     if (g % 10 == 0) {
@@ -223,6 +223,7 @@ function solveMain(user_datas) {
 
 function solve() {
     var user_datas = []
+    finish = false
     for (var i = 0; i < N; i++) {
         data = getRandomData()
         user_datas.push({ user_data: data, match: checkRules(data, false) })
