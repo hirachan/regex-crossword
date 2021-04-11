@@ -6,6 +6,7 @@
     <script src="jquery.1.6.1.min.js"></script>
     <script src="boards.js"></script>
     <script src="crossword.js"></script>
+    <script src="solve.js"></script>
     <link rel="stylesheet" type="text/css" href="crossword.css">
   </head>
   <body>
@@ -57,12 +58,16 @@
           <input type="text" width=100 id="puzzle_link" />
         </span>
       </td>
+      <td>
+        <input type="button" value="Solve" id="solve_button" />
+      </td>
     </tr></table>
     <table id="board_table">
       <tr><td id="board" align="center">
       </td>
     </table>
-
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    gen: <span id="gen">0</span>
     <br/>
     <br/>
     <br/>

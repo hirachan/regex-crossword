@@ -79,31 +79,41 @@ function strReverse(str) {
   return ret;
 }
 
-function checkRules() {
+function checkRules(data=user_data, show=true) {
   var ii;
   var debug = [];
+  var match_num = 0;
 
   function check(str, axis, idx) {
     var rule = board_data[axis][idx];
     var regex = new RegExp(rule);
     var match = str.match(regex);
+    var ret;
     if (match && match[0] === str) {
-      $('#rule_' + axis + '_' + idx).removeClass('nomatch');
-      $('#rule_' + axis + '_' + idx).addClass('match');
+      if (show) {
+        $('#rule_' + axis + '_' + idx).removeClass('nomatch');
+        $('#rule_' + axis + '_' + idx).addClass('match');
+      }
+      ret = 1;
     } else {
-      $('#rule_' + axis + '_' + idx).removeClass('match');
-      $('#rule_' + axis + '_' + idx).addClass('nomatch');
+      if (show) {
+        $('#rule_' + axis + '_' + idx).removeClass('match');
+        $('#rule_' + axis + '_' + idx).addClass('nomatch');
+      }
+      ret = 0;
     }
-    debug.push(axis + idx + ': ' + str + (match?' (match)':'') );
+    debug.push(axis + idx + ': ' + str + (match ? ' (match)' : ''));
+
+    return ret
   }
 
 
   for (ii = 0; ii < size; ++ii) {
     var str = '';
     for (jj = 0; jj < rowSize(ii); ++jj) {
-      str += user_data.rows[ii][jj];
+      str += data.rows[ii][jj];
     }
-    check(str, 'y', ii);
+    match_num += check(str, 'y', ii);
 
     str = '';
     for (jj = 0; jj < size; ++jj) {
@@ -112,12 +122,12 @@ function checkRules() {
       if (jj > mid) {
         j -= (jj - mid);
       }
-      if (user_data.rows[i][j] !== undefined) {
-        str += user_data.rows[i][j];
+      if (data.rows[i][j] !== undefined) {
+        str += data.rows[i][j];
       }
     }
     str = strReverse(str);
-    check(str, 'x', ii);
+    match_num += check(str, 'x', ii);
 
     str = '';
     for (jj = 0; jj < size; ++jj) {
@@ -126,14 +136,16 @@ function checkRules() {
       if (jj < mid) {
         j -= (mid - jj);
       }
-      if (user_data.rows[i][j] !== undefined) {
-        str += user_data.rows[i][j];
+      if (data.rows[i][j] !== undefined) {
+        str += data.rows[i][j];
       }
     }
-    check(str, 'z', ii);
+    match_num += check(str, 'z', ii);
 
   }
   $('#debug').html(debug.join('<br/>'));
+
+  return match_num
 }
 
 function checkArrowKeys(elem, event) {
